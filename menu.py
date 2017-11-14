@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 @pytest.fixture
 def driver(request):
-    browser=webdriver.Firefox()
+    browser = webdriver.Firefox()
     #print(browser.capabilities)
     request.addfinalizer(browser.quit)
     return browser
@@ -14,9 +14,9 @@ def driver(request):
 def test_loggin(driver):
     wait = WebDriverWait(driver, 10)
     driver.get("http://localhost/litecart/admin")
-    login=driver.find_element_by_name("username").send_keys("admin")
-    passwort=driver.find_element_by_name("password").send_keys("admin")
-    submit_button=driver.find_element_by_css_selector(".footer [type='submit']").click()
+    login = driver.find_element_by_name("username").send_keys("admin")
+    passwort = driver.find_element_by_name("password").send_keys("admin")
+    submit_button = driver.find_element_by_css_selector(".footer [type='submit']").click()
     #assert "My Store" in driver.title
     assert wait.until(EC.title_is("My Store"))
 
