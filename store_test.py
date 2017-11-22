@@ -30,11 +30,12 @@ def test_store(driver):
         except:
             pass
 
-        cartCounter = driver.find_element_by_css_selector('#cart .quantity')
+        cartCounterLocator = '#cart .quantity'
+        cartCounter = driver.find_element_by_css_selector(cartCounterLocator)
         addToCart= driver.find_element_by_css_selector(".quantity [type='submit']").click()
-        wait.until(EC.text_to_be_present_in_element_value(cartCounter, i+1))
+        wait.until(EC.text_to_be_present_in_element(cartCounterLocator, str(i+1)))
         cartCounter
-        assert cartCounter == 1+i
+        assert(cartCounter == 1+i)
 
         driver.execute_script("window.history.go(-1)")
 
