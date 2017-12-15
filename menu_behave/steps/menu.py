@@ -2,19 +2,22 @@ from behave import given, when, then
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-@given(u'I am on store page')
-def start_page(context):
-    context.driver.get("http://localhost/litecart/admin")
+@given(u"I am on '{url}' page")
+def start_page(context, url):
+    context.driver.get(url)
 
 
-@when(u'I am logged in as admin')
-def loggin(context):
+@when(u"I type '{text}' in '{input}' input field")
+def login(context, text, input):
     wait = WebDriverWait(context.driver, 10)
-    login = context.driver.find_element_by_name("username").send_keys("admin")
-    passwort = context.driver.find_element_by_name("password").send_keys("admin")
-    submit_button = context.driver.find_element_by_css_selector(".footer [type='submit']").click()
-    #assert "My Store" in driver.title
-    assert wait.until(EC.title_is("My Store"))
+    login = context.driver.find_element_by_name('input_id'.format(input_id=input))
+    login.send_keys(text)
+
+@when(u"I click '{zaloguj}' button")
+    context.driver.find_element_by_css_selector('zaloguj_id'.format(zaloguj_id=zaloguj)).click()
+
+@then(u"I am on new page with title '{text}'")
+    assert wait.until(EC.title_is(text))
 
 @when(u'I am browsing menu')
 def step_impl(context):
@@ -38,5 +41,4 @@ def step_impl(context):
 
 @then(u'I get header of subpage')
 def step_impl(context):
-    #submenuheaderList,menuheaderList = browsing()
     print(context.submenuheaderList, context.menuheaderList)
