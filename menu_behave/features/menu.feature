@@ -8,7 +8,7 @@ Feature: menu
     Then I am on new page with title 'My Store'
 
  Scenario: browsing menu
-    And I am browsing menu
+    When I am browsing menu
     Then I get header of subpage
 
   Scenario: add new duck
