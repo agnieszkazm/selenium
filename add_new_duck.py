@@ -13,21 +13,14 @@ def driver(request):
     request.addfinalizer(browser.quit)
     return browser
 
-def test_loggin(driver):
-    wait = WebDriverWait(driver, 10)
-    driver.get("http://localhost/litecart/admin")
-    login = driver.find_element_by_name("username").send_keys("admin")
-    passwort = driver.find_element_by_name("password").send_keys("admin")
-    submit_button = driver.find_element_by_css_selector(".footer [type='submit']").click()
-    #assert "My Store" in driver.title
-    assert wait.until(EC.title_is("My Store"))
-
 # General tab
     catalog = driver.find_element_by_css_selector("ul#box-apps-menu li:nth-child(2)").click()
     product_page = driver.find_element_by_css_selector("#content .button:nth-child(2)").click()
+
     enable_check = driver.find_element_by_xpath(".//*[@id='tab-general']/table/tbody/tr[1]/td/label[1]/input").get_attribute("checked")
     if enable_check in (None, False):
         enable = driver.find_element_by_xpath(".//*[@id='tab-general']/table/tbody/tr[1]/td/label[1]/input").click()
+
     name = driver.find_element_by_css_selector('tbody [name="name[en]"]').send_keys("SuperDuck" + Keys.TAB + "SD")
     prod_group = driver.find_element_by_xpath(".//*[@id='tab-general']/table/tbody/tr[7]/td/div/table/tbody/tr[2]/td[1]/input").click()
     quantity = driver.find_element_by_css_selector("tbody [name=quantity]").send_keys("100")
