@@ -16,9 +16,9 @@ def login(context, input, text):
     login = context.driver.find_element_by_name(input)
     login.send_keys(text)
 
-@when(u"I click '{zaloguj}' button")
-def step_impl(context, zaloguj):
-    context.driver.find_element_by_css_selector(zaloguj).click()
+@when(u"I click '{id_button}' button")
+def step_impl(context, id_button):
+    context.driver.find_element_by_css_selector(id_button).click()
 
 @then(u"I am on new page with title '{text}'")
 def step_impl(context, text):
@@ -49,9 +49,9 @@ def step_impl(context):
     print(context.submenuheaderList, context.menuheaderList)
 
 
-@when(u"I click on '{menu_element}' menu element")
-def step_impl(context, menu_element):
-    context.driver.find_element_by_css_selector(menu_element).click()
+@when(u"I click on '{id_element}' element")
+def step_impl(context, id_element):
+    context.driver.find_element_by_css_selector(id_element).click()
 
 
 @when(u"I check status '{status_radio_button}' of radio button '{element_radio_button}'")
@@ -60,29 +60,47 @@ def step_impl(context, status_radio_button, element_radio_button):
     if enable_check in (None, False):
         enable = context.driver.find_element_by_xpath(element_radio_button).click()
 
+@when (u"I fill '{text}' and '{text}' in '{input_field}' input field")
+def step_impl(context, input_field, text):
+    name = context.driver.find_element_by_css_selector(input_field).send_keys(text + Keys.TAB + text)
 
-    name = context.driver.find_element_by_css_selector('tbody [name="name[en]"]').send_keys("SuperDuck" + Keys.TAB + "SD")
-    prod_group = context.driver.find_element_by_xpath(".//*[@id='tab-general']/table/tbody/tr[7]/td/div/table/tbody/tr[2]/td[1]/input").click()
-    quantity = context.driver.find_element_by_css_selector("tbody [name=quantity]").send_keys("100")
-    date_from = context.driver.find_element_by_css_selector("tbody [name=date_valid_from]").send_keys("11/17/2017" + Keys.TAB + "12/31/2017")
+@when (u"I click on xpath '{element}' element")
+def step_impl(context, element):   
+    prod_group = context.driver.find_element_by_xpath(element).click()
+
+@when (u"I fill '{text}' in '{input_field}' input field")
+def step_impl(context, input_field, text):
+    quantity = context.driver.find_element_by_css_selector(input_field).send_keys(text)
+
+
+    #date_from = context.driver.find_element_by_css_selector("tbody [name=date_valid_from]").send_keys("11/17/2017" + Keys.TAB + "12/31/2017")
 
 # Information tab
-    info_tab = context.driver.find_element_by_css_selector('form [href="#tab-information"]').click()
-    manufacturer = context.driver.find_element_by_css_selector('tbody [name="manufacturer_id"]').click()
-    select_manufact = context.driver.find_element_by_css_selector('tbody [name="manufacturer_id"] option:last-child').click()
-    text_fields = context.driver.find_element_by_css_selector('tbody [name="keywords"]').send_keys("SuperDuck, female" + Keys.TAB + "groovy female super duck" + Keys.TAB + "New female SuperDuck inspired by comicbook super heros. A must-have for Wonder Woman fans :-)" + Keys.TAB + "SuperDuck - super hero help" + Keys.TAB + "SuperDuck - super fun")
+
+    #info_tab = context.driver.find_element_by_css_selector('form [href="#tab-information"]').click()
+    #manufacturer = context.driver.find_element_by_css_selector('tbody [name="manufacturer_id"]').click()
+    #select_manufact = context.driver.find_element_by_css_selector('tbody [name="manufacturer_id"] option:last-child').click()
+ @When (u"I fill '{text} and '{text}' and '{text}' and '{text}' and '{text}' in '{input_field}' input field") 
+ def step_ impl(context, text, input_field): 
+    text_fields = context.driver.find_element_by_css_selector(input_field).send_keys(text + Keys.TAB + text + Keys.TAB + text + Keys.TAB + text + Keys.TAB + text)
 
 # Prices tab
-    info_tab = context.driver.find_element_by_css_selector('form [href="#tab-prices"]').click()
-    purchase_price = context.driver.find_element_by_css_selector('#tab-prices [name=purchase_price]').send_keys(Keys.DELETE + "25")
-    currency_click = context.driver.find_element_by_css_selector('tbody [name="purchase_price_currency_code"]').click()
-    currency = context.driver.find_element_by_css_selector('tbody [name="purchase_price_currency_code"] option:last-child').click()
-    gross_usd = context.driver.find_element_by_css_selector('#tab-prices [name="gross_prices[USD]"]').send_keys(Keys.DELETE + "30")
-    gross_eur = context.driver.find_element_by_css_selector('#tab-prices [name="gross_prices[EUR]"]').send_keys(Keys.DELETE + "25")
+
+    #info_tab = context.driver.find_element_by_css_selector('form [href="#tab-prices"]').click()
+@When(u"I delete existing element and add new '{text}' in '{input_field}' input field")
+def step_impl(context, text, input_field):
+    purchase_price = context.driver.find_element_by_css_selector(input_field).send_keys(Keys.DELETE + text)
+    
+    #currency_click = context.driver.find_element_by_css_selector('tbody [name="purchase_price_currency_code"]').click()
+    #currency = context.driver.find_element_by_css_selector('tbody [name="purchase_price_currency_code"] option:last-child').click()
+    #gross_usd = context.driver.find_element_by_css_selector('#tab-prices [name="gross_prices[USD]"]').send_keys(Keys.DELETE + "30")
+    #gross_eur = context.driver.find_element_by_css_selector('#tab-prices [name="gross_prices[EUR]"]').send_keys(Keys.DELETE + "25")
     #time.sleep(2)
 # Save product
-    save = context.driver.find_element_by_css_selector('.button-set [name=save]').click()
+    #save = context.driver.find_element_by_css_selector('.button-set [name=save]').click()
     #time.sleep(3)
 # Check if product is added
-    assert context.driver.find_element_by_css_selector(".notice.success")
-    #time.sleep(3)
+@Then(u"I can see '{id_element}' element on page")
+def step_impl(context, id_element)
+    assert context.driver.find_element_by_css_selector(id_element)
+    #time.sleep(3)tab-prices [name="gross_prices[EUR]"]
